@@ -13,8 +13,6 @@ def plot(screen, x, y, color = DEFAULT_LINE_COLOR):
 def draw_line(screen, x0, y0, x1, y1):
     if x1 < x0:
         x0, x1 = x1, x0
-    if y1 < y0:
-        y0, y1 = y1, y0
     A = y1 - y0
     B = x0 - x1
     x = x0
@@ -42,6 +40,15 @@ def draw_line(screen, x0, y0, x1, y1):
             d += 2*B
 
     if slope < 0 and slope >= -1: # octant 8
+        d = 2*A - B
+        while x <= x1 and y >= y1:
+            plot(screen, x, y)
+            if d < 0:
+                y -= 1
+                d -= 2*B
+            x += 1
+            d += 2*A
+        
 
 def screen_to_string(screen):
     return ' '.join([' '.join(' '.join([str(x) for x in color]) for color in row) for row in screen])
@@ -58,7 +65,7 @@ def save_ppm(screen, fname = 'foo.ppm'):
 
 def main():
     screen = new_screen()
-    draw_line(screen, 0, 0, 50, 100)
+    draw_line(screen, 0, 100, 300, 10)
     save_ppm(screen)
 
 if __name__ == '__main__':
