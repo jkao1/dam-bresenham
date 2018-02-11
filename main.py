@@ -52,7 +52,7 @@ def draw_line(screen, x0, y0, x1, y1):
 
     if slope < -1: # octant 7
         d = A - 2*B
-        while x <= x1 and y <= y1:
+        while x <= x1 and y >= y1:
             plot(screen, x, y)
             if d > 0:
                 x += 1
@@ -75,7 +75,8 @@ def save_ppm(screen, fname = 'foo.ppm'):
 
 def main():
     screen = new_screen()
-    draw_line(screen, 0, 110, 100, 0)
+    draw_line(screen, 0, 0, 100, 100)
+    draw_line(screen, 0, 300, 200, 0)
     save_ppm(screen)
 
 if __name__ == '__main__':
