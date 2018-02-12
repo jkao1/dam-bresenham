@@ -18,6 +18,15 @@ def draw_line(screen, x0, y0, x1, y1):
     B = x0 - x1
     x = x0
     y = y0
+    if B == 0: # vertical line
+        if y1 < y0:
+            y0, y1 = y1, y0
+        y = y0
+        while y <= y1:
+            plot(screen, x, y)
+            y += 1
+        return
+
     slope = A / (-1.0 * B)
 
     if slope >= 0 and slope <= 1: # octant 1
@@ -75,8 +84,24 @@ def save_ppm(screen, fname = 'foo.ppm'):
 
 def main():
     screen = new_screen()
-    draw_line(screen, 0, 0, 100, 100)
-    draw_line(screen, 0, 300, 200, 0)
+
+    # Octant 1 tests
+    draw_line(screen, XRES / 2, YRES / 2, XRES - 1, YRES / 2)
+    draw_line(screen, XRES / 2, YRES / 2, XRES - 1, YRES * 2 / 3)
+    draw_line(screen, XRES / 2, YRES / 2, XRES - 1, YRES - 1)
+
+    # Octant 2 tests
+    draw_line(screen, XRES / 2, YRES / 2, XRES * 2 / 3, YRES - 1)
+    draw_line(screen, XRES / 2, YRES / 2, XRES / 2, YRES - 1)
+
+    # Octant 8 tests
+    draw_line(screen, XRES / 2, YRES / 2, XRES - 1, YRES * 1 / 3)
+    draw_line(screen, XRES / 2, YRES / 2, XRES - 1, 0)
+
+    # Octant 7 tests
+    draw_line(screen, XRES / 2, YRES / 2, XRES * 2 / 3, 0)
+    draw_line(screen, XRES / 2, YRES / 2, XRES / 2, 0)
+
     save_ppm(screen)
 
 if __name__ == '__main__':
